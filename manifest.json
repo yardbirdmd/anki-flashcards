@@ -1,20 +1,19 @@
 {
   "name": "Flashcards — Spaced Repetition",
   "short_name": "Flashcards",
-  "description": "Anki-style spaced repetition flashcard app",
+  "description": "Anki-style spaced repetition flashcard app with spreadsheet import",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f0f14",
-  "theme_color": "#0f0f14",
+  "background_color": "#0d0d12",
+  "theme_color": "#0d0d12",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230f0f14'/><text y='130' x='96' text-anchor='middle' font-size='110'>🃏</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230d0d12'/><text y='130' x='96' text-anchor='middle' font-size='110'>🃏</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "productivity"],
-  "lang": "en"
+  "categories": ["education", "productivity"]
 }
