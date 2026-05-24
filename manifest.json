@@ -1,15 +1,15 @@
 {
-  "name": "Flashcards — Google Sheets Sync",
+  "name": "Flashcards — OneDrive Sync",
   "short_name": "Flashcards",
-  "description": "Spaced repetition flashcards synced with Google Sheets",
+  "description": "Spaced repetition flashcards synced with Microsoft OneDrive",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a0a0f",
-  "theme_color": "#0a0a0f",
+  "background_color": "#09090e",
+  "theme_color": "#09090e",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%230a0a0f'/><text y='130' x='96' text-anchor='middle' font-size='110'>🃏</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%2309090e'/><text y='130' x='96' text-anchor='middle' font-size='110'>🃏</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"

@@ -6,31 +6,31 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Flashcards"/>
-  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="theme-color" content="#09090e"/>
   <link rel="manifest" href="manifest.json"/>
   <title>Flashcards</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
     :root {
-      --bg:       #0a0a0f;
-      --s1:       #13131c;
-      --s2:       #1a1a26;
-      --s3:       #222233;
-      --b1:       #28283c;
-      --b2:       #333348;
-      --text:     #ebebf5;
-      --muted:    #60607a;
-      --muted2:   #40405a;
-      --gold:     #e8c97a;
-      --green:    #5dd8a0;
-      --red:      #f07070;
-      --blue:     #70b0f0;
-      --lavender: #b8a0f0;
-      --r:        18px;
+      --bg:      #09090e;
+      --s1:      #111118;
+      --s2:      #18181f;
+      --s3:      #202028;
+      --b1:      #262630;
+      --b2:      #30303c;
+      --text:    #e8e8f0;
+      --muted:   #5a5a72;
+      --muted2:  #3a3a50;
+      --sky:     #5ba3f5;
+      --teal:    #38d9c0;
+      --rose:    #f07080;
+      --amber:   #f0b840;
+      --lilac:   #c0a8f8;
+      --r:       18px;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bot: env(safe-area-inset-bottom, 0px);
     }
@@ -38,7 +38,7 @@
     html, body {
       height: 100%; overflow: hidden;
       background: var(--bg); color: var(--text);
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Sora', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -49,67 +49,74 @@
       padding-top: var(--safe-top); overflow: hidden;
     }
 
-    /* ══ SYNC STATUS BAR ══ */
+    /* ── Sync bar ── */
     #sync-bar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 6px 18px; background: var(--s1);
-      border-bottom: 1px solid var(--b1); flex-shrink: 0;
-      font-size: 11px; min-height: 32px;
+      padding: 5px 18px; background: var(--s1);
+      border-bottom: 1px solid var(--b1);
+      font-size: 11px; flex-shrink: 0; min-height: 30px;
     }
     .sync-status { display: flex; align-items: center; gap: 6px; color: var(--muted); font-weight: 500; }
-    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted2); flex-shrink: 0; }
-    .sync-dot.synced  { background: var(--green); box-shadow: 0 0 6px rgba(93,216,160,.6); }
-    .sync-dot.syncing { background: var(--gold); animation: pulse 1s infinite; }
-    .sync-dot.error   { background: var(--red); }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .sync-btn {
+    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted2); flex-shrink: 0; transition: background .3s; }
+    .sync-dot.synced  { background: var(--teal);  box-shadow: 0 0 6px rgba(56,217,192,.5); }
+    .sync-dot.syncing { background: var(--amber); animation: blink 1s infinite; }
+    .sync-dot.error   { background: var(--rose); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .user-name { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .auth-btn {
       background: none; border: 1px solid var(--b2); color: var(--muted);
-      font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
-      padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all .15s;
+      font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 20px; cursor: pointer; transition: all .15s;
     }
-    .sync-btn:active { background: var(--b1); }
-    .sync-btn.sign-in { color: var(--gold); border-color: rgba(232,201,122,.4); }
-    .sync-btn.sign-out { color: var(--red); border-color: rgba(240,112,112,.3); }
+    .auth-btn:active { background: var(--b1); }
+    .auth-btn.sign-in { color: var(--sky); border-color: rgba(91,163,245,.4); }
+    .auth-btn.sign-out { color: var(--rose); border-color: rgba(240,112,128,.35); }
 
-    /* ══ HEADER ══ */
+    /* ── Header ── */
     header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 18px 8px; flex-shrink: 0;
     }
-    .logo { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 300; letter-spacing: -.5px; color: var(--gold); }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 400; letter-spacing: -.4px;
+      color: var(--sky);
+    }
     .logo em { color: var(--text); font-style: italic; }
     .hdr-btns { display: flex; gap: 7px; }
     .hdr-btn {
-      background: var(--s2); border: 1px solid var(--b1);
-      color: var(--text); font-family: 'Outfit', sans-serif;
-      font-size: 12px; font-weight: 500; padding: 6px 13px;
-      border-radius: 50px; cursor: pointer; transition: all .14s;
+      background: var(--s2); border: 1px solid var(--b1); color: var(--text);
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 500;
+      padding: 6px 13px; border-radius: 50px; cursor: pointer; transition: all .14s;
     }
     .hdr-btn:active { background: var(--b1); transform: scale(.95); }
-    .hdr-btn.accent { background: var(--gold); color: #0a0a0f; border-color: var(--gold); font-weight: 600; }
+    .hdr-btn.accent { background: var(--sky); color: #09090e; border-color: var(--sky); font-weight: 600; }
     .hdr-btn.accent:active { opacity: .82; }
 
-    /* ══ SCREENS ══ */
+    /* ── Screens ── */
     .screen { display: none; flex-direction: column; flex: 1; overflow: hidden; }
     .screen.active { display: flex; }
     .scroll-body { flex: 1; overflow-y: auto; padding: 6px 18px 100px; }
     ::-webkit-scrollbar { width: 0; }
 
-    /* ══ SECTION LABEL ══ */
-    .sec { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--muted); margin: 18px 0 9px; }
+    .sec {
+      font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin: 18px 0 9px;
+    }
 
-    /* ══ DUE BANNER ══ */
+    /* ── Due banner ── */
     .due-banner {
-      background: linear-gradient(135deg, #1a1530, #111e2a);
-      border: 1px solid #28204a; border-radius: var(--r);
+      background: linear-gradient(135deg, #111830, #0e1a20);
+      border: 1px solid #1e2840; border-radius: var(--r);
       padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 10px;
     }
-    .due-num { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 600;
-      color: var(--lavender); line-height: 1; }
+    .due-num {
+      font-family: 'Playfair Display', serif; font-size: 44px;
+      color: var(--sky); line-height: 1;
+    }
     .due-lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
-    /* ══ DECK CARDS ══ */
+    /* ── Deck cards ── */
     .deck-card {
       background: var(--s1); border: 1px solid var(--b1); border-radius: var(--r);
       padding: 14px 16px; margin-bottom: 8px; cursor: pointer;
@@ -117,35 +124,38 @@
       transition: border-color .15s, transform .12s;
       animation: fadeUp .22s ease both;
     }
-    .deck-card:active { transform: scale(.98); border-color: var(--gold); }
+    .deck-card:active { transform: scale(.98); border-color: var(--sky); }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } }
-    .deck-ico { width: 42px; height: 42px; border-radius: 12px; display: flex;
-      align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .deck-ico {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
     .deck-name { font-weight: 600; font-size: 15px; }
     .deck-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
     .deck-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; flex-shrink: 0; }
-    .badge-due  { background: #2a1515; color: var(--red); }
-    .badge-done { background: #112515; color: var(--green); }
+    .badge-due  { background: #2a1318; color: var(--rose); }
+    .badge-done { background: #0e2420; color: var(--teal); }
 
-    /* ══ EMPTY STATE ══ */
+    /* ── Empty ── */
     .empty { text-align: center; padding: 50px 16px; color: var(--muted); }
     .empty-ico { font-size: 44px; margin-bottom: 14px; }
     .empty p { font-size: 13px; line-height: 1.7; }
 
-    /* ══ FAB ══ */
+    /* ── FAB ── */
     .fab {
       position: fixed; right: calc(50% - min(232px, 48vw));
       bottom: calc(20px + var(--safe-bot));
       width: 50px; height: 50px; border-radius: 25px;
-      background: var(--gold); color: #0a0a0f;
+      background: var(--sky); color: #09090e;
       font-size: 23px; border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 22px rgba(232,201,122,.4); z-index: 20;
+      box-shadow: 0 4px 22px rgba(91,163,245,.4); z-index: 20;
       transition: transform .14s;
     }
     .fab:active { transform: scale(.9); }
 
-    /* ══ NAV ══ */
+    /* ── Nav ── */
     nav {
       display: flex; border-top: 1px solid var(--b1);
       background: var(--s1); flex-shrink: 0; padding-bottom: var(--safe-bot);
@@ -153,16 +163,16 @@
     .nav-btn {
       flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
       padding: 10px 4px; background: none; border: none; color: var(--muted);
-      font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 600;
+      font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 600;
       letter-spacing: .5px; text-transform: uppercase; cursor: pointer; transition: color .15s;
     }
     .nav-btn .ni { font-size: 18px; }
-    .nav-btn.active { color: var(--gold); }
+    .nav-btn.active { color: var(--sky); }
 
-    /* ══ OVERLAYS ══ */
+    /* ── Overlays ── */
     .overlay {
       display: none; position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+      background: rgba(0,0,0,.76); backdrop-filter: blur(6px);
       align-items: flex-end; justify-content: center;
     }
     .overlay.open { display: flex; }
@@ -180,60 +190,72 @@
       animation: slideUp .24s cubic-bezier(.28,1.1,.6,1);
     }
     @keyframes slideUp { from { transform: translateY(100%); } }
-    .sheet-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 300; margin-bottom: 18px; }
+    .sheet-title {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      font-weight: 400; margin-bottom: 18px;
+    }
 
-    /* ══ FIELDS ══ */
+    /* ── Fields ── */
     .field { margin-bottom: 13px; }
-    .field label { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px;
-      text-transform: uppercase; display: block; margin-bottom: 5px; }
+    .field label {
+      font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px;
+      text-transform: uppercase; display: block; margin-bottom: 5px;
+    }
     .field input, .field select, .field textarea {
       width: 100%; background: var(--s2); border: 1px solid var(--b1);
-      color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px;
+      color: var(--text); font-family: 'Sora', sans-serif; font-size: 14px;
       border-radius: 11px; padding: 11px 13px; outline: none; resize: none;
       transition: border-color .15s;
     }
-    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--sky); }
     .field select option { background: var(--s2); }
 
     .btn-row { display: flex; gap: 9px; margin-top: 8px; }
     .btn {
       flex: 1; padding: 13px; border-radius: 13px; border: none;
-      font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+      font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
       cursor: pointer; transition: transform .12s, opacity .12s;
     }
     .btn:active { transform: scale(.97); opacity: .82; }
-    .btn-primary { background: var(--gold); color: #0a0a0f; }
-    .btn-ghost   { background: var(--s2); color: var(--text); border: 1px solid var(--b1); }
-    .btn-danger  { background: #281414; color: var(--red); border: 1px solid #3a2020; }
-    .btn-success { background: #112515; color: var(--green); border: 1px solid #1e3820; }
+    .btn-primary { background: var(--sky);  color: #09090e; }
+    .btn-ghost   { background: var(--s2);   color: var(--text); border: 1px solid var(--b1); }
+    .btn-danger  { background: #2a1215;     color: var(--rose); border: 1px solid #3c1e22; }
+    .btn-success { background: #0e2420;     color: var(--teal); border: 1px solid #183830; }
 
-    /* ══ LOADING SPINNER ══ */
-    .spinner-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
-    .spinner { width: 36px; height: 36px; border: 2px solid var(--b2); border-top-color: var(--gold);
-      border-radius: 50%; animation: spin .7s linear infinite; }
+    /* ── Spinner ── */
+    .spinner-wrap {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+    }
+    .spinner {
+      width: 34px; height: 34px; border: 2px solid var(--b2);
+      border-top-color: var(--sky); border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner-label { font-size: 13px; color: var(--muted); }
+    .spinner-lbl { font-size: 13px; color: var(--muted); }
 
-    /* ══ IMPORT SHEET ══ */
+    /* ── Import ── */
     .sf-head { padding: 20px 20px 14px; flex-shrink: 0; border-bottom: 1px solid var(--b1); }
     .sf-head-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .sf-deck-select {
+    .sf-deck-sel {
       flex: 1; background: var(--s2); border: 1px solid var(--b1);
-      color: var(--text); font-family: 'Outfit', sans-serif; font-size: 13px;
+      color: var(--text); font-family: 'Sora', sans-serif; font-size: 13px;
       font-weight: 500; border-radius: 10px; padding: 8px 12px; outline: none;
     }
-    .sf-deck-select:focus { border-color: var(--gold); }
+    .sf-deck-sel:focus { border-color: var(--sky); }
     .back-btn {
       background: var(--s2); border: 1px solid var(--b1); color: var(--text);
       font-size: 16px; width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      flex-shrink: 0;
     }
     .back-btn:active { background: var(--b1); }
     .tab-strip { display: flex; gap: 4px; background: var(--s2); border-radius: 11px; padding: 3px; }
     .tab {
       flex: 1; text-align: center; padding: 7px 6px; border-radius: 8px;
       font-size: 11px; font-weight: 600; cursor: pointer; color: var(--muted);
-      transition: all .18s; letter-spacing: .2px;
+      transition: all .18s;
     }
     .tab.active { background: var(--s3); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.4); }
     .tab-panel { display: none; flex: 1; overflow: hidden; flex-direction: column; }
@@ -241,48 +263,45 @@
 
     /* Grid */
     .grid-wrap { flex: 1; overflow: auto; }
-    .grid-table { border-collapse: collapse; width: 100%; min-width: 320px;
-      font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .grid-table { border-collapse: collapse; width: 100%; min-width: 320px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
     .grid-table th {
       background: var(--s2); color: var(--muted);
-      font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 600;
+      font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 600;
       letter-spacing: 1.2px; text-transform: uppercase;
       padding: 8px 10px; text-align: left;
       border-bottom: 1px solid var(--b1); position: sticky; top: 0; z-index: 2;
     }
     .grid-table th:first-child { width: 30px; text-align: center; color: var(--muted2); }
-    .row-num { color: var(--muted2); text-align: center; padding: 0 6px; font-size: 10px;
-      font-family: 'Outfit', sans-serif; user-select: none; cursor: pointer; }
+    .row-num { color: var(--muted2); text-align: center; padding: 0 6px; font-size: 10px; font-family: 'Sora', sans-serif; user-select: none; cursor: pointer; }
     .grid-table td { border-bottom: 1px solid var(--b2); vertical-align: top; }
-    .grid-table tr.selected td { background: rgba(232,201,122,.06); }
+    .grid-table tr.selected td { background: rgba(91,163,245,.06); }
     .cell-input {
       width: 100%; background: transparent; border: none; color: var(--text);
       font-family: 'JetBrains Mono', monospace; font-size: 12px;
       padding: 9px 10px; outline: none; resize: none; display: block;
       line-height: 1.45; min-height: 36px;
     }
-    .cell-input:focus { background: rgba(232,201,122,.05); }
+    .cell-input:focus { background: rgba(91,163,245,.05); }
     .cell-input::placeholder { color: var(--muted2); }
     .grid-footer {
       flex-shrink: 0; border-top: 1px solid var(--b1);
-      padding: 9px 14px; display: flex; align-items: center; justify-content: space-between;
-      background: var(--s1);
+      padding: 9px 14px; display: flex; align-items: center; justify-content: space-between; background: var(--s1);
     }
     .gf-left { display: flex; gap: 7px; }
     .gf-btn {
       background: var(--s2); border: 1px solid var(--b1); color: var(--text);
-      font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 500;
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 500;
       padding: 6px 12px; border-radius: 9px; cursor: pointer; transition: all .13s;
     }
     .gf-btn:active { transform: scale(.95); background: var(--b1); }
-    .gf-btn.del { color: var(--red); }
+    .gf-btn.del { color: var(--rose); }
     .row-count { font-size: 11px; color: var(--muted); }
 
-    /* CSV panel */
+    /* CSV */
     .csv-body { flex: 1; display: flex; flex-direction: column; padding: 14px 18px; gap: 11px; overflow-y: auto; }
     .format-box { background: var(--s2); border: 1px solid var(--b1); border-radius: 12px; padding: 13px 15px; }
     .format-title { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 7px; }
-    .format-code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--lavender); line-height: 1.8; }
+    .format-code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--lilac); line-height: 1.8; }
     .format-code span { color: var(--muted); }
     .sep-row { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
     .sep-label { font-size: 11px; color: var(--muted); font-weight: 500; }
@@ -291,14 +310,14 @@
       font-family: 'JetBrains Mono', monospace; font-size: 11px;
       padding: 5px 10px; border-radius: 8px; cursor: pointer; transition: all .13s;
     }
-    .sep-btn.active { background: var(--gold); color: #0a0a0f; border-color: var(--gold); font-weight: 700; }
+    .sep-btn.active { background: var(--sky); color: #09090e; border-color: var(--sky); font-weight: 700; }
     .csv-ta {
       width: 100%; min-height: 140px; background: var(--s2); border: 1px solid var(--b1);
       color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 12px;
       border-radius: 12px; padding: 12px 13px; outline: none; resize: none; line-height: 1.6;
       transition: border-color .15s;
     }
-    .csv-ta:focus { border-color: var(--gold); }
+    .csv-ta:focus { border-color: var(--sky); }
     .preview-box { background: var(--s2); border: 1px solid var(--b1); border-radius: 12px; padding: 10px 13px; }
     .preview-title { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 7px; }
     .prev-row { display: flex; gap: 8px; margin-bottom: 3px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
@@ -313,13 +332,13 @@
       display: flex; gap: 9px; background: var(--s1);
     }
 
-    /* ══ STUDY ══ */
+    /* ── Study ── */
     #study-screen { background: var(--bg); }
     .study-hdr { padding: 14px 18px 0; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
     .study-deck-name { font-weight: 600; font-size: 14px; }
     .study-prog-txt { font-size: 11px; color: var(--muted); }
     .prog-wrap { height: 2px; background: var(--s2); margin: 12px 18px; flex-shrink: 0; }
-    .prog-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width .4s; }
+    .prog-bar { height: 100%; background: var(--sky); border-radius: 2px; transition: width .4s; }
     .card-area {
       flex: 1; display: flex; flex-direction: column; align-items: center;
       justify-content: center; padding: 0 18px; perspective: 1200px;
@@ -336,69 +355,62 @@
       backface-visibility: hidden; -webkit-backface-visibility: hidden;
     }
     .flip-front { background: var(--s1); border: 1px solid var(--b1); box-shadow: 0 8px 40px rgba(0,0,0,.5); }
-    .flip-back  { background: linear-gradient(150deg,#181328,#111e28); border: 1px solid #241e3a;
+    .flip-back  { background: linear-gradient(150deg,#111828,#0e1e20); border: 1px solid #1e2a38;
       box-shadow: 0 8px 40px rgba(0,0,0,.5); transform: rotateY(180deg); }
-    .face-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 14px; }
-    .face-txt { font-family: 'Fraunces', serif; font-size: clamp(16px,5vw,24px);
-      font-weight: 300; line-height: 1.4; color: var(--text); }
-    .flip-back .face-txt { color: var(--gold); }
+    .face-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .face-txt {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(16px,5vw,24px); line-height: 1.4; color: var(--text);
+    }
+    .flip-back .face-txt { color: var(--sky); }
     .tap-hint { position: absolute; bottom: 18px; font-size: 11px; color: var(--muted2); }
     .rating-area { width: 100%; max-width: 380px; padding: 16px 0 0; }
-    .rating-lbl { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-      color: var(--muted); text-align: center; margin-bottom: 12px; }
+    .rating-lbl { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 12px; }
     .rating-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
     .rating-btn {
       border: none; border-radius: 12px; padding: 11px 6px;
-      font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600;
-      cursor: pointer; transition: transform .12s; display: flex; flex-direction: column;
-      align-items: center; gap: 3px;
+      font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 600;
+      cursor: pointer; transition: transform .12s; display: flex; flex-direction: column; align-items: center; gap: 3px;
     }
     .rating-btn:active { transform: scale(.93); }
-    .rating-btn .rn { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; }
-    .rb0{background:#281414;color:#f07070}.rb1{background:#271c12;color:#f0a060}
-    .rb2{background:#272212;color:#e8c97a}.rb3{background:#172516;color:#90e8a8}
-    .rb4{background:#122515;color:#5dd8a0}.rb5{background:#121e2a;color:#70b0f0}
+    .rating-btn .rn { font-family: 'Playfair Display', serif; font-size: 20px; }
+    .rb0{background:#281214;color:#f07080}.rb1{background:#261c10;color:#f0a060}
+    .rb2{background:#262010;color:#f0b840}.rb3{background:#102420;color:#70e0c8}
+    .rb4{background:#0e2220;color:#38d9c0}.rb5{background:#101e2a;color:#5ba3f5}
 
-    /* ══ SESSION DONE ══ */
+    /* ── Session done ── */
     .session-done {
       flex: 1; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; padding: 32px 22px; text-align: center;
+      justify-content: center; padding: 30px 22px; text-align: center;
     }
     .done-ico { font-size: 56px; margin-bottom: 18px; }
-    .done-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 300; margin-bottom: 5px; }
+    .done-title { font-family: 'Playfair Display', serif; font-size: 30px; margin-bottom: 5px; }
     .done-sub { color: var(--muted); font-size: 13px; margin-bottom: 26px; }
     .done-stats { display: flex; gap: 10px; margin-bottom: 32px; width: 100%; max-width: 300px; }
     .done-stat { flex: 1; background: var(--s1); border: 1px solid var(--b1); border-radius: 14px; padding: 13px 8px; }
-    .ds-val { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 600; }
+    .ds-val { font-family: 'Playfair Display', serif; font-size: 28px; }
     .ds-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
 
-    /* ══ BROWSE ══ */
-    .screen-hdr { padding: 13px 18px; display: flex; align-items: center; gap: 10px;
-      flex-shrink: 0; border-bottom: 1px solid var(--b1); }
-    .screen-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 300; flex: 1; }
-    .browse-card { background: var(--s1); border: 1px solid var(--b1); border-radius: 14px;
-      padding: 13px 15px; margin-bottom: 8px; animation: fadeUp .18s ease both; }
+    /* ── Browse ── */
+    .screen-hdr { padding: 13px 18px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; border-bottom: 1px solid var(--b1); }
+    .screen-title { font-family: 'Playfair Display', serif; font-size: 20px; flex: 1; }
+    .browse-card { background: var(--s1); border: 1px solid var(--b1); border-radius: 14px; padding: 13px 15px; margin-bottom: 8px; animation: fadeUp .18s ease both; }
     .bc-front { font-weight: 600; font-size: 13px; margin-bottom: 5px; }
     .bc-back { font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.45; }
     .bc-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-    .mtag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 50px;
-      background: var(--s2); color: var(--muted); }
-    .mtag.due { background: #281414; color: var(--red); }
-    .del-btn { margin-left: auto; background: none; border: none; color: var(--muted);
-      font-size: 15px; cursor: pointer; padding: 0; transition: color .13s; }
-    .del-btn:active { color: var(--red); }
+    .mtag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 50px; background: var(--s2); color: var(--muted); }
+    .mtag.due { background: #2a1215; color: var(--rose); }
+    .del-btn { margin-left: auto; background: none; border: none; color: var(--muted); font-size: 15px; cursor: pointer; padding: 0; transition: color .13s; }
+    .del-btn:active { color: var(--rose); }
 
-    /* ══ STATS ══ */
-    .stats-block { background: var(--s1); border: 1px solid var(--b1); border-radius: 14px;
-      padding: 3px 15px; margin-bottom: 12px; }
-    .stat-row { display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0; border-bottom: 1px solid var(--b1); }
+    /* ── Stats ── */
+    .stats-block { background: var(--s1); border: 1px solid var(--b1); border-radius: 14px; padding: 3px 15px; margin-bottom: 12px; }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--b1); }
     .stat-row:last-child { border-bottom: none; }
     .sk { font-size: 13px; color: var(--muted); }
     .sv { font-size: 13px; font-weight: 600; }
 
-    /* ══ TOAST ══ */
+    /* ── Toast ── */
     #toast {
       position: fixed; bottom: calc(82px + var(--safe-bot));
       left: 50%; transform: translateX(-50%) translateY(14px);
@@ -410,28 +422,39 @@
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ══ OFFLINE BANNER ══ */
+    /* ── Offline banner ── */
     #offline-banner {
-      display: none; background: #281414; border-bottom: 1px solid #3a2020;
-      color: var(--red); font-size: 11px; font-weight: 500;
+      display: none; background: #2a1215; border-bottom: 1px solid #3c1e22;
+      color: var(--rose); font-size: 11px; font-weight: 500;
       padding: 6px 18px; text-align: center; flex-shrink: 0;
     }
     #offline-banner.show { display: block; }
+
+    /* ── OneDrive info box ── */
+    .info-box {
+      background: var(--s2); border: 1px solid var(--b1); border-radius: 14px;
+      padding: 16px 18px; margin: 12px 0;
+    }
+    .info-box-title { font-size: 11px; font-weight: 600; color: var(--sky); letter-spacing: .6px; text-transform: uppercase; margin-bottom: 8px; }
+    .info-box p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .info-box code { font-family: 'JetBrains Mono', monospace; color: var(--lilac); font-size: 11px; }
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- Offline banner -->
-  <div id="offline-banner">⚠ No internet connection — showing cached data</div>
+  <div id="offline-banner">⚠ No internet — showing cached data</div>
 
-  <!-- Sync status bar -->
+  <!-- Sync bar -->
   <div id="sync-bar">
     <div class="sync-status">
       <div class="sync-dot" id="sync-dot"></div>
-      <span id="sync-label">Loading…</span>
+      <span id="sync-label">Initialising…</span>
     </div>
-    <button class="sync-btn sign-in" id="auth-btn" onclick="handleAuthBtn()">Sign in with Google</button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="user-name" id="user-name"></span>
+      <button class="auth-btn sign-in" id="auth-btn" onclick="handleAuth()">Sign in with Microsoft</button>
+    </div>
   </div>
 
   <!-- HOME -->
@@ -485,7 +508,6 @@
 
 <!-- OVERLAYS -->
 
-<!-- New Deck -->
 <div class="overlay" id="ov-new-deck">
   <div class="sheet">
     <div class="sheet-title">New Deck</div>
@@ -498,7 +520,6 @@
   </div>
 </div>
 
-<!-- Add Card -->
 <div class="overlay" id="ov-add-card">
   <div class="sheet">
     <div class="sheet-title">Add Card</div>
@@ -512,7 +533,6 @@
   </div>
 </div>
 
-<!-- Delete deck -->
 <div class="overlay" id="ov-del-deck">
   <div class="sheet">
     <div class="sheet-title">Delete Deck?</div>
@@ -524,15 +544,15 @@
   </div>
 </div>
 
-<!-- Import sheet -->
+<!-- Import -->
 <div class="overlay" id="ov-import">
   <div class="sheet-full">
     <div class="sf-head">
       <div class="sf-head-row">
         <button class="back-btn" onclick="closeOv('ov-import')">←</button>
         <div style="flex:1">
-          <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:300;margin-bottom:7px">Import Cards</div>
-          <select class="sf-deck-select" id="imp-deck"></select>
+          <div style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:7px">Import Cards</div>
+          <select class="sf-deck-sel" id="imp-deck"></select>
         </div>
       </div>
       <div class="tab-strip">
@@ -541,10 +561,9 @@
       </div>
     </div>
 
-    <!-- Grid tab -->
     <div class="tab-panel active" id="tab-grid">
       <div class="grid-wrap">
-        <table class="grid-table" id="grid-table">
+        <table class="grid-table">
           <thead><tr>
             <th>#</th>
             <th style="width:45%">Front (Question)</th>
@@ -563,11 +582,10 @@
       </div>
       <div class="import-actions">
         <button class="btn btn-ghost" onclick="clearGrid()">Clear</button>
-        <button class="btn btn-success" onclick="importGrid()">Import to Sheet</button>
+        <button class="btn btn-success" onclick="importGrid()">Save to OneDrive</button>
       </div>
     </div>
 
-    <!-- CSV tab -->
     <div class="tab-panel" id="tab-csv">
       <div class="csv-body">
         <div class="format-box">
@@ -575,7 +593,7 @@
           <div class="format-code">
             What is osmosis?<span>,</span>Water crossing a membrane<br>
             Capital of Japan?<span>,</span>Tokyo<br>
-            <span style="color:var(--muted2)">— or paste directly from Excel / Sheets (tab-separated)</span>
+            <span style="color:var(--muted2)">— or paste from Excel / Sheets (tab-separated)</span>
           </div>
         </div>
         <div class="sep-row">
@@ -595,7 +613,7 @@
       </div>
       <div class="import-actions">
         <button class="btn btn-ghost" onclick="document.getElementById('csv-input').value='';updateCsvPreview()">Clear</button>
-        <button class="btn btn-success" onclick="importCsv()">Import to Sheet</button>
+        <button class="btn btn-success" onclick="importCsv()">Save to OneDrive</button>
       </div>
     </div>
   </div>
@@ -604,17 +622,14 @@
 <div id="toast"></div>
 
 <script type="module">
-// ════════════════════════════════════════════════════════
-// Import the Sheets API layer
-// ════════════════════════════════════════════════════════
 import {
-  CONFIG, initSheets, isSignedIn, signIn, signOut,
-  loadAll, ensureHeaders,
-  fetchDecks, addDeck, deleteDeck,
-  fetchCards, addCards, syncStudyResults, deleteCard as apiDeleteCard,
-} from './sheets.js';
+  CONFIG, initGraph, isSignedIn, getUser, signIn, signOut,
+  ensureWorkbook, loadAll,
+  addDeck, deleteDeck,
+  addCards, syncStudyResults, deleteCard as apiDeleteCard,
+} from './graph.js';
 
-// ── SM-2 ──────────────────────────────────────────────
+// ── SM-2 ──────────────────────────────────────────────────────────────────
 function sm2(card, q) {
   let { reps=0, interval=1, ef=2.5 } = card;
   if (q < 3) { reps=0; interval=1; }
@@ -629,249 +644,259 @@ function sm2(card, q) {
   return { ...card, reps, interval, ef, due: due.toISOString().slice(0,10) };
 }
 
-// ── Helpers ───────────────────────────────────────────
-const today   = () => new Date().toISOString().slice(0,10);
-const cardsDue= deck => deck.cards.filter(c=>(c.due||today())<=today());
-const mkCard  = (deck,f,b) => ({ id: `${Date.now()}${Math.random().toString(36).slice(2,6)}`, deck, front:f, back:b, reps:0, interval:1, ef:2.5, due:today() });
-const esc     = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ── Helpers ───────────────────────────────────────────────────────────────
+const today    = () => new Date().toISOString().slice(0,10);
+const cardsDue = deck => deck.cards.filter(c=>(c.due||today())<=today());
+const mkCard   = (deck,f,b) => ({ id:`${Date.now()}${Math.random().toString(36).slice(2,6)}`, deck, front:f, back:b, reps:0, interval:1, ef:2.5, due:today() });
+const esc      = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-// ── Local cache (mirrors the sheet) ───────────────────
-let DATA = { decks: {} }; // { decks: { name: { icon, cards[] } } }
+let DATA = { decks: {} };
 
-// ── Sync UI ───────────────────────────────────────────
+// ── Sync state ────────────────────────────────────────────────────────────
 function setSyncState(state, label) {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot ' + state;
-  lbl.textContent = label;
+  document.getElementById('sync-dot').className = 'sync-dot ' + state;
+  document.getElementById('sync-label').textContent = label;
 }
 
-// Expose to inline onclick
-window.handleAuthBtn = async function() {
+function updateAuthUI() {
+  const btn  = document.getElementById('auth-btn');
+  const name = document.getElementById('user-name');
+  const user = getUser();
+  if (user) {
+    name.textContent = user.name || user.email;
+    btn.textContent  = 'Sign out';
+    btn.className    = 'auth-btn sign-out';
+  } else {
+    name.textContent = '';
+    btn.textContent  = 'Sign in with Microsoft';
+    btn.className    = 'auth-btn sign-in';
+  }
+}
+
+window.handleAuth = async function() {
   if (isSignedIn()) {
-    signOut();
-    updateAuthBtn();
+    await signOut();
+    DATA = { decks: {} };
+    updateAuthUI();
     setSyncState('', 'Signed out');
+    renderHome();
   } else {
     try {
       setSyncState('syncing', 'Signing in…');
       await signIn();
-      updateAuthBtn();
+      updateAuthUI();
       await fullSync();
     } catch(e) {
+      console.error(e);
       setSyncState('error', 'Sign-in failed');
-      toast('Sign-in failed — check your Config');
+      toast('Sign-in failed — check your Client ID');
     }
   }
 };
 
-function updateAuthBtn() {
-  const btn = document.getElementById('auth-btn');
-  if (isSignedIn()) {
-    btn.textContent = 'Sign out';
-    btn.className = 'sync-btn sign-out';
-  } else {
-    btn.textContent = 'Sign in with Google';
-    btn.className = 'sync-btn sign-in';
-  }
-}
-
-// ── Full sync from Sheet ──────────────────────────────
 async function fullSync() {
   if (!isSignedIn()) { setSyncState('', 'Not signed in'); return; }
-  setSyncState('syncing', 'Syncing…');
+  setSyncState('syncing', 'Syncing with OneDrive…');
   try {
-    await ensureHeaders();
+    await ensureWorkbook();
     DATA = await loadAll();
     setSyncState('synced', `Synced ${new Date().toLocaleTimeString()}`);
     renderHome();
     if (document.getElementById('browse-screen').classList.contains('active')) renderBrowse();
-    if (document.getElementById('stats-screen').classList.contains('active')) renderStats();
+    if (document.getElementById('stats-screen').classList.contains('active'))  renderStats();
   } catch(e) {
     console.error('Sync error', e);
     setSyncState('error', 'Sync failed');
-    toast('Sync failed — are you signed in?');
+    toast('Sync failed — check console for details');
   }
 }
 
-// Pull-to-refresh on home scroll
+// Pull-to-refresh
 let startY = 0;
 document.getElementById('home-body').addEventListener('touchstart', e => { startY = e.touches[0].clientY; });
 document.getElementById('home-body').addEventListener('touchend', e => {
-  const dy = e.changedTouches[0].clientY - startY;
-  if (dy > 80 && document.getElementById('home-body').scrollTop === 0) {
-    fullSync();
-    toast('Refreshing…');
+  if (e.changedTouches[0].clientY - startY > 80 && document.getElementById('home-body').scrollTop === 0) {
+    fullSync(); toast('Refreshing from OneDrive…');
   }
 });
 
-// ── Screens ───────────────────────────────────────────
+// ── Screens ───────────────────────────────────────────────────────────────
 window.showScreen = function(name) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(name+'-screen').classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.screen===name));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.screen===name));
   const fab = document.querySelector('.fab');
-  if(fab) fab.style.display = name==='home'?'flex':'none';
-  if(name==='home')   renderHome();
-  if(name==='browse') renderBrowse();
-  if(name==='stats')  renderStats();
+  if (fab) fab.style.display = name==='home' ? 'flex' : 'none';
+  if (name==='home')   renderHome();
+  if (name==='browse') renderBrowse();
+  if (name==='stats')  renderStats();
 };
 
-// ── Overlays ──────────────────────────────────────────
 window.openOv  = id => document.getElementById(id).classList.add('open');
 window.closeOv = id => document.getElementById(id).classList.remove('open');
-document.querySelectorAll('.overlay').forEach(o=>{
-  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target===o) o.classList.remove('open'); });
 });
 
 let toastT;
 window.toast = function(msg) {
   const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),2400);
+  clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'), 2400);
 };
 
-// ── Home ──────────────────────────────────────────────
+// ── Home ──────────────────────────────────────────────────────────────────
 function renderHome() {
   const el = document.getElementById('home-body');
   const names = Object.keys(DATA.decks);
+
   if (!names.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-ico">🃏</div>
-      <p>${isSignedIn() ? 'No decks yet. Tap <strong>+ Deck</strong> to start.' : 'Sign in with Google to load your decks from the sheet.'}</p></div>`;
+    el.innerHTML = `
+      <div class="empty">
+        <div class="empty-ico">🃏</div>
+        <p>${isSignedIn()
+          ? 'No decks yet.<br>Tap <strong>+ Deck</strong> to create your first one.'
+          : 'Sign in with Microsoft to load your decks<br>from <strong>OneDrive</strong>.'
+        }</p>
+      </div>
+      ${isSignedIn() ? '' : `
+      <div class="info-box">
+        <div class="info-box-title">Your data lives in OneDrive</div>
+        <p>Cards are stored in <code>${CONFIG.FILE_PATH}</code> in your OneDrive. Open that file in Excel to edit cards directly — changes sync to the app on next refresh.</p>
+      </div>`}`;
     return;
   }
-  const totalDue = names.reduce((s,n)=>s+cardsDue(DATA.decks[n]).length,0);
-  let h='';
-  if(totalDue) h+=`<div class="due-banner"><div style="font-size:28px">⚡</div>
+
+  const totalDue = names.reduce((s,n)=>s+cardsDue(DATA.decks[n]).length, 0);
+  let h = '';
+  if (totalDue) h += `<div class="due-banner"><div style="font-size:28px">⚡</div>
     <div><div class="due-num">${totalDue}</div><div class="due-lbl">card${totalDue>1?'s':''} due today</div></div></div>`;
-  h+=`<div class="sec">Your Decks</div>`;
-  const bgs=['#1a1230','#111828','#101e12','#221a0e','#181228'];
-  names.forEach((n,i)=>{
+  h += `<div class="sec">Your Decks</div>`;
+  const bgs = ['#111828','#0e1e18','#1a1210','#181228','#0e1a22'];
+  names.forEach((n,i) => {
     const dk=DATA.decks[n], due=cardsDue(dk).length;
-    h+=`<div class="deck-card" style="animation-delay:${i*35}ms" onclick="window._startStudy('${esc(n)}')">
+    h += `<div class="deck-card" style="animation-delay:${i*35}ms" onclick="window._startStudy('${esc(n)}')">
       <div class="deck-ico" style="background:${bgs[i%bgs.length]}">${dk.icon||'📖'}</div>
       <div style="flex:1;min-width:0">
         <div class="deck-name">${esc(n)}</div>
         <div class="deck-meta">${dk.cards.length} card${dk.cards.length!==1?'s':''}</div>
       </div>
-      ${due?`<div class="deck-badge badge-due">${due} due</div>`:`<div class="deck-badge badge-done">✓</div>`}
+      ${due ? `<div class="deck-badge badge-due">${due} due</div>` : `<div class="deck-badge badge-done">✓</div>`}
     </div>`;
   });
-  h+=`<div class="sec">Manage</div>`;
-  names.forEach(n=>{
-    const dk=DATA.decks[n];
-    h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--b1)">
-      <span style="font-size:13px">${dk.icon||'📖'} ${esc(n)}</span>
+  h += `<div class="sec">Manage</div>`;
+  names.forEach(n => {
+    h += `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--b1)">
+      <span style="font-size:13px">${DATA.decks[n].icon||'📖'} ${esc(n)}</span>
       <button onclick="window._promptDelDeck('${esc(n)}')" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:4px 8px">Delete</button>
     </div>`;
   });
-  h+=`<div style="height:8px"></div><div style="text-align:center;font-size:11px;color:var(--muted2);padding-bottom:4px">Pull down to refresh from Google Sheets</div>`;
-  el.innerHTML=h;
+  h += `<div style="height:8px"></div>
+    <div style="text-align:center;font-size:11px;color:var(--muted2);padding-bottom:4px">Pull down to sync from OneDrive</div>`;
+  el.innerHTML = h;
 }
 
-// ── Decks ─────────────────────────────────────────────
+// ── Decks ─────────────────────────────────────────────────────────────────
 window.openNewDeck = function() {
   document.getElementById('nd-name').value='';
   document.getElementById('nd-icon').value='';
   openOv('ov-new-deck');
-  setTimeout(()=>document.getElementById('nd-name').focus(),280);
+  setTimeout(()=>document.getElementById('nd-name').focus(), 280);
 };
 window.createDeck = async function() {
-  const name=document.getElementById('nd-name').value.trim();
-  const icon=document.getElementById('nd-icon').value.trim()||'📖';
-  if(!name){toast('Enter a name');return;}
-  if(DATA.decks[name]){toast('Already exists');return;}
-  if(!isSignedIn()){toast('Sign in first');return;}
+  const name = document.getElementById('nd-name').value.trim();
+  const icon = document.getElementById('nd-icon').value.trim() || '📖';
+  if (!name) { toast('Enter a name'); return; }
+  if (DATA.decks[name]) { toast('Deck already exists'); return; }
+  if (!isSignedIn()) { toast('Sign in first'); return; }
   try {
-    setSyncState('syncing','Saving…');
-    await addDeck(name,icon);
-    DATA.decks[name]={icon,cards:[]};
-    setSyncState('synced','Saved');
+    setSyncState('syncing', 'Saving…');
+    await addDeck(name, icon);
+    DATA.decks[name] = { icon, cards:[] };
+    setSyncState('synced', 'Saved to OneDrive');
     closeOv('ov-new-deck'); renderHome(); toast(`Deck "${name}" created`);
   } catch(e) { setSyncState('error','Save failed'); toast('Failed to save'); }
 };
-document.getElementById('nd-name').addEventListener('keydown',e=>{ if(e.key==='Enter') window.createDeck(); });
+document.getElementById('nd-name').addEventListener('keydown', e => { if(e.key==='Enter') window.createDeck(); });
 
-let _delDeck=null;
+let _delDeck = null;
 window._promptDelDeck = function(name) {
-  _delDeck=name;
-  document.getElementById('del-deck-msg').textContent=`"${name}" and all its cards will be permanently deleted from the Sheet.`;
+  _delDeck = name;
+  document.getElementById('del-deck-msg').textContent =
+    `"${name}" and all its cards will be permanently deleted from OneDrive.`;
   openOv('ov-del-deck');
 };
 window.confirmDelDeck = async function() {
-  if(!_delDeck)return;
-  if(!isSignedIn()){toast('Sign in first');return;}
+  if (!_delDeck) return;
+  if (!isSignedIn()) { toast('Sign in first'); return; }
   try {
-    setSyncState('syncing','Deleting…');
+    setSyncState('syncing', 'Deleting…');
     await deleteDeck(_delDeck);
     delete DATA.decks[_delDeck];
-    setSyncState('synced','Saved');
+    setSyncState('synced', 'Saved to OneDrive');
     closeOv('ov-del-deck'); renderHome(); toast('Deck deleted'); _delDeck=null;
   } catch(e) { setSyncState('error','Delete failed'); toast('Failed'); }
 };
 
-// ── Add Card ──────────────────────────────────────────
+// ── Cards ─────────────────────────────────────────────────────────────────
 window.openAddCard = function(deckName) {
-  const names=Object.keys(DATA.decks);
-  if(!names.length){toast('Create a deck first');window.openNewDeck();return;}
-  const sel=document.getElementById('ac-deck');
-  sel.innerHTML=names.map(n=>`<option value="${esc(n)}"${n===deckName?' selected':''}>${esc(n)}</option>`).join('');
+  const names = Object.keys(DATA.decks);
+  if (!names.length) { toast('Create a deck first'); window.openNewDeck(); return; }
+  const sel = document.getElementById('ac-deck');
+  sel.innerHTML = names.map(n=>`<option value="${esc(n)}"${n===deckName?' selected':''}>${esc(n)}</option>`).join('');
   document.getElementById('ac-front').value='';
   document.getElementById('ac-back').value='';
   openOv('ov-add-card');
-  setTimeout(()=>document.getElementById('ac-front').focus(),280);
+  setTimeout(()=>document.getElementById('ac-front').focus(), 280);
 };
 window.saveCard = async function() {
-  const deck=document.getElementById('ac-deck').value;
-  const front=document.getElementById('ac-front').value.trim();
-  const back=document.getElementById('ac-back').value.trim();
-  if(!front||!back){toast('Fill in both sides');return;}
-  if(!isSignedIn()){toast('Sign in first');return;}
-  const card=mkCard(deck,front,back);
+  const deck  = document.getElementById('ac-deck').value;
+  const front = document.getElementById('ac-front').value.trim();
+  const back  = document.getElementById('ac-back').value.trim();
+  if (!front||!back) { toast('Fill in both sides'); return; }
+  if (!isSignedIn()) { toast('Sign in first'); return; }
+  const card = mkCard(deck, front, back);
   try {
     setSyncState('syncing','Saving…');
     await addCards([card]);
     DATA.decks[deck].cards.push(card);
-    setSyncState('synced','Saved');
+    setSyncState('synced','Saved to OneDrive');
     closeOv('ov-add-card'); toast('Card added!'); renderHome();
-  } catch(e) { setSyncState('error','Save failed'); toast('Failed to save card'); }
+  } catch(e) { setSyncState('error','Save failed'); toast('Failed to save'); }
 };
-
-// ── Delete Card ───────────────────────────────────────
 window._deleteCard = async function(deckName, cardId) {
-  if(!isSignedIn()){toast('Sign in first');return;}
+  if (!isSignedIn()) { toast('Sign in first'); return; }
   try {
     setSyncState('syncing','Deleting…');
     await apiDeleteCard(cardId);
-    DATA.decks[deckName].cards = DATA.decks[deckName].cards.filter(c=>c.id!==String(cardId));
-    setSyncState('synced','Saved');
+    DATA.decks[deckName].cards = DATA.decks[deckName].cards.filter(c=>String(c.id)!==String(cardId));
+    setSyncState('synced','Saved to OneDrive');
     renderBrowse(); toast('Card deleted');
   } catch(e) { setSyncState('error','Delete failed'); toast('Failed'); }
 };
 
-// ── Study ─────────────────────────────────────────────
-let session=null;
+// ── Study ─────────────────────────────────────────────────────────────────
+let session = null;
 window._startStudy = function(deckName) {
-  const deck=DATA.decks[deckName];
-  if(!deck)return;
-  const due=cardsDue(deck);
-  if(!due.length){toast('All caught up! 🎉');return;}
-  const queue=[...due].sort(()=>Math.random()-.5);
-  session={deckName,queue,index:0,passed:0,total:queue.length,changes:[]};
-  document.getElementById('s-deck').textContent=deckName;
-  document.getElementById('main-nav').style.display='none';
-  document.querySelector('.fab').style.display='none';
+  const deck = DATA.decks[deckName];
+  if (!deck) return;
+  const due = cardsDue(deck);
+  if (!due.length) { toast('All caught up! 🎉'); return; }
+  const queue = [...due].sort(()=>Math.random()-.5);
+  session = { deckName, queue, index:0, passed:0, total:queue.length, changes:[] };
+  document.getElementById('s-deck').textContent = deckName;
+  document.getElementById('main-nav').style.display = 'none';
+  document.querySelector('.fab').style.display = 'none';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('study-screen').classList.add('active');
   showStudyCard();
 };
 function showStudyCard() {
-  const s=session;
-  if(s.index>=s.queue.length){showDone();return;}
-  const card=s.queue[s.index];
-  s.flipped=false;
-  document.getElementById('s-bar').style.width=Math.round(s.index/s.total*100)+'%';
-  document.getElementById('s-prog').textContent=`${s.index+1} / ${s.total}`;
-  document.getElementById('card-area').innerHTML=`
+  const s = session;
+  if (s.index >= s.queue.length) { showDone(); return; }
+  const card = s.queue[s.index]; s.flipped = false;
+  document.getElementById('s-bar').style.width = Math.round(s.index/s.total*100)+'%';
+  document.getElementById('s-prog').textContent = `${s.index+1} / ${s.total}`;
+  document.getElementById('card-area').innerHTML = `
     <div class="flip-card" id="flip-card" onclick="window._flip()">
       <div class="flip-face flip-front">
         <div class="face-lbl">Question</div>
@@ -896,19 +921,17 @@ function showStudyCard() {
     </div>`;
 }
 window._flip = function() {
-  if(session.flipped)return; session.flipped=true;
+  if (session.flipped) return; session.flipped=true;
   document.getElementById('flip-card').classList.add('flipped');
-  setTimeout(()=>{ document.getElementById('rating-area').style.display=''; },280);
+  setTimeout(()=>{ document.getElementById('rating-area').style.display=''; }, 280);
 };
 window._rate = function(q) {
   const s=session, card=s.queue[s.index];
-  const updated=sm2(card,q); if(q>=3)s.passed++;
-  // Update local cache
+  const updated=sm2(card,q); if(q>=3) s.passed++;
   const dk=DATA.decks[s.deckName];
   const idx=dk.cards.findIndex(c=>c.id===card.id);
   if(idx>=0) dk.cards[idx]=updated;
-  s.changes.push(updated); // batch for sheet sync
-  s.index++; s.flipped=false; showStudyCard();
+  s.changes.push(updated); s.index++; s.flipped=false; showStudyCard();
 };
 function showDone() {
   const s=session, pct=Math.round(s.passed/s.total*100);
@@ -919,18 +942,17 @@ function showDone() {
       <div class="done-title">Session Done</div>
       <div class="done-sub">${pct}% correct</div>
       <div class="done-stats">
-        <div class="done-stat"><div class="ds-val" style="color:var(--green)">${s.passed}</div><div class="ds-lbl">Correct</div></div>
-        <div class="done-stat"><div class="ds-val" style="color:var(--red)">${s.total-s.passed}</div><div class="ds-lbl">Missed</div></div>
+        <div class="done-stat"><div class="ds-val" style="color:var(--teal)">${s.passed}</div><div class="ds-lbl">Correct</div></div>
+        <div class="done-stat"><div class="ds-val" style="color:var(--rose)">${s.total-s.passed}</div><div class="ds-lbl">Missed</div></div>
         <div class="done-stat"><div class="ds-val">${s.total}</div><div class="ds-lbl">Total</div></div>
       </div>
       <button class="btn btn-primary" style="width:100%;max-width:260px" onclick="window._endStudy()">Back to Decks</button>
     </div>`;
-  // Batch-sync results to sheet
-  if(isSignedIn() && s.changes.length) {
-    setSyncState('syncing','Saving results…');
+  if (isSignedIn() && s.changes.length) {
+    setSyncState('syncing','Saving results to OneDrive…');
     syncStudyResults(s.changes)
       .then(()=>setSyncState('synced','Results saved'))
-      .catch(()=>setSyncState('error','Save failed — results may not sync'));
+      .catch(()=>setSyncState('error','Results not saved — check connection'));
   }
 }
 window._endStudy = function() {
@@ -939,12 +961,12 @@ window._endStudy = function() {
   showScreen('home');
 };
 
-// ── Browse ────────────────────────────────────────────
+// ── Browse ─────────────────────────────────────────────────────────────────
 function renderBrowse() {
   const el=document.getElementById('browse-body');
   let h='', count=0;
   Object.entries(DATA.decks).forEach(([dname,deck])=>{
-    if(!deck.cards.length)return;
+    if(!deck.cards.length) return;
     h+=`<div class="sec">${deck.icon||'📖'} ${esc(dname)}</div>`;
     deck.cards.forEach((c,i)=>{
       count++;
@@ -962,11 +984,11 @@ function renderBrowse() {
       </div>`;
     });
   });
-  if(!count) h=`<div class="empty"><div class="empty-ico">📭</div><p>No cards yet.</p></div>`;
+  if (!count) h=`<div class="empty"><div class="empty-ico">📭</div><p>No cards yet.</p></div>`;
   el.innerHTML=h;
 }
 
-// ── Stats ─────────────────────────────────────────────
+// ── Stats ──────────────────────────────────────────────────────────────────
 function renderStats() {
   const el=document.getElementById('stats-body');
   const names=Object.keys(DATA.decks);
@@ -976,8 +998,8 @@ function renderStats() {
   let h=`<div class="sec">Overview</div><div class="stats-block">
     <div class="stat-row"><span class="sk">Decks</span><span class="sv">${names.length}</span></div>
     <div class="stat-row"><span class="sk">Total cards</span><span class="sv">${tc}</span></div>
-    <div class="stat-row"><span class="sk">Due today</span><span class="sv" style="color:${td?'var(--red)':'var(--green)'}">${td}</span></div>
-    <div class="stat-row"><span class="sk">Mature (21d+)</span><span class="sv" style="color:var(--green)">${tm}</span></div>
+    <div class="stat-row"><span class="sk">Due today</span><span class="sv" style="color:${td?'var(--rose)':'var(--teal)'}">${td}</span></div>
+    <div class="stat-row"><span class="sk">Mature (21d+)</span><span class="sv" style="color:var(--teal)">${tm}</span></div>
   </div>`;
   names.forEach(n=>{
     const dk=DATA.decks[n],cards=dk.cards;
@@ -987,24 +1009,23 @@ function renderStats() {
     const avgEF=cards.length?(cards.reduce((s,c)=>s+(c.ef||2.5),0)/cards.length).toFixed(2):'—';
     h+=`<div class="sec">${dk.icon||'📖'} ${esc(n)}</div><div class="stats-block">
       <div class="stat-row"><span class="sk">Cards</span><span class="sv">${cards.length}</span></div>
-      <div class="stat-row"><span class="sk">Due today</span><span class="sv" style="color:${due?'var(--red)':'var(--green)'}">${due}</span></div>
-      <div class="stat-row"><span class="sk">New</span><span class="sv" style="color:var(--lavender)">${newC}</span></div>
-      <div class="stat-row"><span class="sk">Young</span><span class="sv" style="color:var(--gold)">${young}</span></div>
-      <div class="stat-row"><span class="sk">Mature</span><span class="sv" style="color:var(--green)">${mature}</span></div>
+      <div class="stat-row"><span class="sk">Due today</span><span class="sv" style="color:${due?'var(--rose)':'var(--teal)'}">${due}</span></div>
+      <div class="stat-row"><span class="sk">New</span><span class="sv" style="color:var(--sky)">${newC}</span></div>
+      <div class="stat-row"><span class="sk">Young</span><span class="sv" style="color:var(--amber)">${young}</span></div>
+      <div class="stat-row"><span class="sk">Mature</span><span class="sv" style="color:var(--teal)">${mature}</span></div>
       <div class="stat-row"><span class="sk">Avg ease</span><span class="sv">${avgEF}</span></div>
     </div>`;
   });
   el.innerHTML=h;
 }
 
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 // IMPORT
-// ══════════════════════════════════════════
+// ══════════════════════════════════════════════
 window.openImport = function() {
   const names=Object.keys(DATA.decks);
   if(!names.length){toast('Create a deck first');window.openNewDeck();return;}
-  const sel=document.getElementById('imp-deck');
-  sel.innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+  document.getElementById('imp-deck').innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
   initGrid(); document.getElementById('csv-input').value=''; updateCsvPreview();
   openOv('ov-import');
 };
@@ -1014,25 +1035,19 @@ window.switchTab = function(name) {
   document.getElementById('tab-csv').classList.toggle('active',name==='csv');
 };
 
-// Grid
 let gridRows=[];
-function initGrid() {
-  gridRows=Array.from({length:8},()=>({front:'',back:'',sel:false})); renderGrid();
-}
-function renderGrid() {
+function initGrid(){ gridRows=Array.from({length:8},()=>({front:'',back:'',sel:false})); renderGrid(); }
+function renderGrid(){
   const tbody=document.getElementById('grid-body');
   tbody.innerHTML=gridRows.map((r,i)=>`
     <tr id="gr-${i}" class="${r.sel?'selected':''}">
-      <td class="row-num" onclick="window._toggleRow(${i})">${i+1}</td>
+      <td class="row-num" onclick="window._togRow(${i})">${i+1}</td>
       <td><textarea class="cell-input" rows="1" placeholder="Question…"
-        oninput="gridRows[${i}].front=this.value;autoResize(this)"
-        >${esc(r.front)}</textarea></td>
+        oninput="gridRows[${i}].front=this.value;_ar(this)">${esc(r.front)}</textarea></td>
       <td><textarea class="cell-input" rows="1" placeholder="Answer…"
-        oninput="gridRows[${i}].back=this.value;autoResize(this)"
-        >${esc(r.back)}</textarea></td>
+        oninput="gridRows[${i}].back=this.value;_ar(this)">${esc(r.back)}</textarea></td>
     </tr>`).join('');
-  tbody.querySelectorAll('.cell-input').forEach(autoResize);
-  // Tab navigation
+  tbody.querySelectorAll('.cell-input').forEach(_ar);
   const inputs=[...tbody.querySelectorAll('.cell-input')];
   inputs.forEach((inp,idx)=>{
     inp.addEventListener('keydown',e=>{
@@ -1045,54 +1060,44 @@ function renderGrid() {
   });
   updateRowCount();
 }
-function autoResize(el) { el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
-window._toggleRow = i => { gridRows[i].sel=!gridRows[i].sel; document.getElementById('gr-'+i).classList.toggle('selected',gridRows[i].sel); };
-window.addGridRow  = () => { gridRows.push({front:'',back:'',sel:false}); renderGrid(); };
-window.addGridRows = n => { for(let i=0;i<n;i++) gridRows.push({front:'',back:'',sel:false}); renderGrid(); };
-window.deleteSelectedRows = () => {
+function _ar(el){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+window._togRow=i=>{ gridRows[i].sel=!gridRows[i].sel; document.getElementById('gr-'+i).classList.toggle('selected',gridRows[i].sel); };
+window.addGridRow=()=>{ gridRows.push({front:'',back:'',sel:false}); renderGrid(); };
+window.addGridRows=n=>{ for(let i=0;i<n;i++) gridRows.push({front:'',back:'',sel:false}); renderGrid(); };
+window.deleteSelectedRows=()=>{
   const sel=gridRows.filter(r=>r.sel).length;
   if(!sel){toast('Tap row number to select');return;}
   gridRows=gridRows.filter(r=>!r.sel);
   if(!gridRows.length) gridRows=[{front:'',back:'',sel:false}];
   renderGrid(); toast(`${sel} row${sel>1?'s':''} deleted`);
 };
-window.clearGrid = () => { initGrid(); toast('Cleared'); };
-function updateRowCount() {
-  const f=gridRows.filter(r=>r.front.trim()&&r.back.trim()).length;
-  document.getElementById('row-count').textContent=`${f} filled`;
-}
-window.importGrid = async function() {
+window.clearGrid=()=>{ initGrid(); toast('Cleared'); };
+function updateRowCount(){ document.getElementById('row-count').textContent=`${gridRows.filter(r=>r.front.trim()&&r.back.trim()).length} filled`; }
+window.importGrid=async function(){
   const deckName=document.getElementById('imp-deck').value;
   const valid=gridRows.filter(r=>r.front.trim()&&r.back.trim());
   if(!valid.length){toast('No complete rows to import');return;}
   if(!isSignedIn()){toast('Sign in first');return;}
   const cards=valid.map(r=>mkCard(deckName,r.front.trim(),r.back.trim()));
-  try {
-    setSyncState('syncing',`Importing ${cards.length} cards…`);
+  try{
+    setSyncState('syncing',`Saving ${cards.length} cards to OneDrive…`);
     await addCards(cards);
     DATA.decks[deckName].cards.push(...cards);
-    setSyncState('synced','Saved to Sheet');
+    setSyncState('synced','Saved to OneDrive');
     closeOv('ov-import'); renderHome();
     toast(`✓ ${cards.length} card${cards.length>1?'s':''} imported`);
     initGrid();
-  } catch(e) { setSyncState('error','Import failed'); toast('Import failed'); }
+  }catch(e){ setSyncState('error','Import failed'); toast('Import failed'); }
 };
 
-// CSV
 let csvSep=',';
-window.setSep = (s,btn) => {
-  csvSep=s;
-  document.querySelectorAll('.sep-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); updateCsvPreview();
-};
-function parseCsv(text,sep) {
+window.setSep=(s,btn)=>{ csvSep=s; document.querySelectorAll('.sep-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); updateCsvPreview(); };
+function parseCsv(text,sep){
   return text.split('\n').map(l=>l.trim()).filter(Boolean)
-    .map(l=>{
-      const parts=sep==='\t'?l.split('\t'):smartSplit(l,sep);
-      return parts.length>=2?[parts[0].trim(),parts.slice(1).join(sep).trim()]:null;
-    }).filter(r=>r&&r[0]&&r[1]);
+    .map(l=>{ const p=sep==='\t'?l.split('\t'):smartSplit(l,sep); return p.length>=2?[p[0].trim(),p.slice(1).join(sep).trim()]:null; })
+    .filter(r=>r&&r[0]&&r[1]);
 }
-function smartSplit(line,sep) {
+function smartSplit(line,sep){
   if(!line.includes('"')) return line.split(sep);
   const res=[]; let cur='',inQ=false;
   for(let i=0;i<line.length;i++){
@@ -1103,9 +1108,8 @@ function smartSplit(line,sep) {
   }
   res.push(cur); return res;
 }
-window.updateCsvPreview = function() {
-  const text=document.getElementById('csv-input').value;
-  const rows=parseCsv(text,csvSep);
+window.updateCsvPreview=function(){
+  const rows=parseCsv(document.getElementById('csv-input').value,csvSep);
   const el=document.getElementById('csv-preview');
   if(!rows.length){el.innerHTML=`<div class="preview-title">Preview</div><div style="color:var(--muted2);font-size:12px">Paste data to preview…</div>`;return;}
   let h=`<div class="preview-title">Preview — ${rows.length} card${rows.length>1?'s':''}</div>`;
@@ -1115,37 +1119,46 @@ window.updateCsvPreview = function() {
   if(rows.length>4) h+=`<div class="prev-more">…and ${rows.length-4} more</div>`;
   el.innerHTML=h;
 };
-window.importCsv = async function() {
+window.importCsv=async function(){
   const deckName=document.getElementById('imp-deck').value;
   const rows=parseCsv(document.getElementById('csv-input').value,csvSep);
   if(!rows.length){toast('No valid rows found');return;}
   if(!isSignedIn()){toast('Sign in first');return;}
   const cards=rows.map(([f,b])=>mkCard(deckName,f,b));
-  try {
-    setSyncState('syncing',`Importing ${cards.length} cards…`);
+  try{
+    setSyncState('syncing',`Saving ${cards.length} cards to OneDrive…`);
     await addCards(cards);
     DATA.decks[deckName].cards.push(...cards);
-    setSyncState('synced','Saved to Sheet');
+    setSyncState('synced','Saved to OneDrive');
     closeOv('ov-import'); renderHome();
     toast(`✓ ${cards.length} card${cards.length>1?'s':''} imported`);
     document.getElementById('csv-input').value=''; updateCsvPreview();
-  } catch(e) { setSyncState('error','Import failed'); toast('Import failed'); }
+  }catch(e){ setSyncState('error','Import failed'); toast('Import failed'); }
 };
 
-// ── Offline detection ─────────────────────────────────
+// ── Offline ────────────────────────────────────────────────────────────────
 window.addEventListener('online',  ()=>document.getElementById('offline-banner').classList.remove('show'));
 window.addEventListener('offline', ()=>document.getElementById('offline-banner').classList.add('show'));
 if(!navigator.onLine) document.getElementById('offline-banner').classList.add('show');
 
-// ── Boot ──────────────────────────────────────────────
+// ── Boot ───────────────────────────────────────────────────────────────────
 setSyncState('syncing','Initialising…');
-initSheets(() => {
-  setSyncState('','Ready — sign in to sync');
-  updateAuthBtn();
+try {
+  await initGraph();
+  updateAuthUI();
+  if (isSignedIn()) {
+    await fullSync();
+  } else {
+    setSyncState('', 'Sign in to load your decks');
+    renderHome();
+  }
+} catch(e) {
+  console.error('Init error', e);
+  setSyncState('error', 'Init failed — check Client ID');
   renderHome();
-});
+}
 
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
