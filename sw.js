@@ -1,4 +1,4 @@
-const CACHE = 'flashcards-v4';
+const CACHE = 'flashcards-v6';
 const ASSETS = ['./', './index.html', './graph.js', './manifest.json'];
 
 self.addEventListener('install', e => {
