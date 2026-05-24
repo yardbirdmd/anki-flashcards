@@ -36,7 +36,7 @@
 
 export const CONFIG = {
   // Paste your Azure App Registration "Application (client) ID" here:
-  CLIENT_ID: '1900d985-2635-40b2-9001-72acefc21199',
+  CLIENT_ID: 'cfc61d4b-e2a7-46cd-9911-681b89733c5d',
 
   // OAuth authority — works for both personal (outlook.com) and work/school accounts:
   AUTHORITY: 'https://login.microsoftonline.com/common',
