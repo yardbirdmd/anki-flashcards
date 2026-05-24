@@ -1,5 +1,5 @@
-const CACHE = 'flashcards-v6';
-const ASSETS = ['./', './index.html', './graph.js', './manifest.json'];
+const CACHE = 'flashcards-v7';
+const ASSETS = ['./', './index.html', './graph.js', './sw.js', './manifest.json', './msal-browser.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
