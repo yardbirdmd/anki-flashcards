@@ -98,16 +98,9 @@ function loadMsal() {
   return new Promise((resolve, reject) => {
     if (window.msal) { resolve(); return; }
     const s = document.createElement('script');
-    s.src = 'https://unpkg.com/@azure/msal-browser@2.38.3/lib/msal-browser.min.js';
+    s.src = 'https://alcdn.msauth.net/browser/2.45.0/js/msal-browser.min.js';
     s.onload = resolve;
-    s.onerror = () => {
-      // fallback to jsDelivr if unpkg fails
-      const s2 = document.createElement('script');
-      s2.src = 'https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js';
-      s2.onload = resolve;
-      s2.onerror = () => reject(new Error('Failed to load MSAL from all CDNs'));
-      document.head.appendChild(s2);
-    };
+    s.onerror = () => reject(new Error('Failed to load MSAL'));
     document.head.appendChild(s);
   });
 }
